@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bledda <bledda@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lmaujean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:30:42 by lmaujean          #+#    #+#             */
-/*   Updated: 2021/11/23 09:58:25 by bledda           ###   ########.fr       */
+/*   Updated: 2021/11/04 12:30:45 by lmaujean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/push_swap.h"
 
 int	ft_sort_3(t_push *push)
@@ -77,4 +76,5 @@ void	ft_sort(t_push *push)
 		ft_sort_5(push);
 	if (ft_stack_is_sort(push->stack_a) && ft_size_stack(push->stack_a) > 5)
 		ft_medium_sort(push);
+	
 }

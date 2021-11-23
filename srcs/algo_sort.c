@@ -3,21 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   algo_sort.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bledda <bledda@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lmaujean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 10:26:15 by lmaujean          #+#    #+#             */
-/*   Updated: 2021/11/23 13:44:37 by bledda           ###   ########.fr       */
+/*   Updated: 2021/11/12 10:26:17 by lmaujean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/push_swap.h"
 
-// int	ft_chunk(t_stack *stack)
-// {
-	
-// }
+int    *ft_copy_stack(t_stack *src)
+{
+    int stack_len;
+    int i;
+    t_list *temp;
+    int *dest;
 
-int	ft_get_index_by_value(t_stack *stack, int value)
+    i = 0;
+    stack_len = src->len;
+    temp = src->start;
+    dest = malloc(sizeof(int *) * stack_len);
+    while (i < stack_len)
+    {
+        dest[i] = temp->value;
+        temp = temp->next;
+        i++;
+    }
+    return (dest);
+}
+
+void    ft_sort_tab(int *tab, int size)
+{
+    int i;
+    int j;
+    int tmp;
+
+    i = -1;
+    while (++i < size)
+    {
+        j = i;
+        while (++j < size)
+        {
+            if (tab[i] > tab[j])
+            {
+                tmp = tab[i];
+                tab[i] = tab[j];
+                tab[j] = tmp;
+            }
+        } 
+    }
+}
+
+int    ft_find_index_pivot(t_stack *stack)
+{
+    int index_pivot;
+    int stack_len;
+
+    stack_len = stack->len;
+    index_pivot = stack->pivot;
+    if ((stack_len) % 2  == 0)
+        index_pivot = stack_len / 2;
+    else
+        index_pivot = stack_len / 2 + 1;
+    return (index_pivot);
+}
+
+int ft_get_index_by_value(t_stack *stack, int value)
 {
     t_list  *tmp;
     int index;
@@ -27,45 +77,31 @@ int	ft_get_index_by_value(t_stack *stack, int value)
     while (tmp)
     {
         if (tmp->value == value)
-            return (index);
+            return (value);
         tmp = tmp->next;
         index++;
     }
     return (-1);
 }
 
-int	ft_index_exist(t_stack *stack, int index)
+void    ft_push_nbr_under_pivot_to_b(t_push *push, int pivot)
 {
-	t_list	*temp;
+    t_list *temp;
+    int i;
+    int stack_len;
 
-	temp = stack->start;
-	while (temp)
-	{
-		if (index == temp->index)
-			return (1);
-		temp = temp->next;
-	}
-	return (0);
-}
-
-void	ft_push_nbr_under_pivot_to_b(t_push *push, int pivot)
-{
-	t_list	*temp;
-	int		i;
-	int		stack_len;
-
-	i = 0;
-	stack_len = push->stack_a->len;
-	temp = push->stack_a->start;
-	while (i < stack_len)
-	{
-		if (temp->index <= pivot)
-			ft_pb(push);
-		else
-			ft_ra(push);
-		temp = push->stack_a->start;
-		i++;
-	}
+    i = 0;
+    stack_len = push->stack_a->len;
+    temp = push->stack_a->start;
+    while (i < stack_len)
+    {
+        if (temp->value <= pivot)
+            ft_pb(push);
+        else
+            ft_ra(push);
+        temp = push->stack_a->start;
+        i++;
+    }
 }
 
 void    ft_push_nbr_above_pivot_to_a(t_push *push, int pivot)
@@ -88,100 +124,30 @@ void    ft_push_nbr_above_pivot_to_a(t_push *push, int pivot)
     }
 }
 
-void	ft_push_index_to_b(t_push *push, int ind)
+void    ft_medium_sort(t_push *push)
 {
-	t_list	*tmp;
+    int *tab;
+    int j;
+    int index_pivot;
+    int value_pivot;
 
-	tmp = push->stack_a->start;
-	while (ind != tmp->index)
-	{
-		// printf("index = %d\n", ind);
-		// printf("tmp->index = %d\n", tmp->index);
-		ft_ra(push);
-		tmp = push->stack_a->start;
-	}
-	ft_pb(push);
-}
 
-int	ft_nearer(int max, t_stack *stack_a)
-{
-	int	index;
-	int	move = 10000000;
-	int save_move;
-	int save_index;
-	t_list *tmp;
-	int i;
-
-	i = 0;
-	while (++i < max)
-	{
-		tmp = stack_a->start;
-		save_move = 0;
-		while (tmp)
-		{	
-			save_move++;
-			if (tmp->index == i)
-			{
-				save_index = tmp->index;
-				if (move > save_move)
-				{
-					move = save_move;
-					index = save_index;
-				}
-			}
-			tmp = tmp->next;
-		}
-	}
-	printf("%d\n", index);
-	return (index);
-}
-
-void	ft_medium_sort(t_push *push)
-{
-	int chunk = 5;
-	int package = ft_get_index_max(push->stack_a) / chunk;
-	int i = 0;
-	int j;
-	//int max;
-	
-	while (i < chunk)
-	{
-		j = 0;
-		int isset = 0;
-		int value = package * (i + 1) + 1;
-		while (++j < value)
-		{
-			if (ft_index_exist(push->stack_a, j))
-				isset = 1;
-		}
-		j= 0;
-		int leplusproche = 0;
-		if (isset)
-			while (leplusproche < value)
-			{
-				leplusproche = ft_nearer(value, push->stack_a);
-				if (ft_index_exist(push->stack_a, leplusproche))
-				{
-					puts("stack_a");
-					print_list(push->stack_a);
-					puts("stack_b");
-					print_list(push->stack_b);
-					ft_push_index_to_b(push, leplusproche);
-				}
-			}
-		i++;
-	}
-	// while (push->stack_b->len != 1)
-	// {
-	// 	max = ft_get_index_max(push->stack_b);
-	// 	if (max != push->stack_b->start->index)
-	// 		ft_rb(push);
-	// 	else
-	// 		ft_pa(push);
-	// }
-	//ft_pa(push);
-	puts("stack_a");
-	print_list(push->stack_a);
-	puts("stack_b");
-	print_list(push->stack_b);
+    j = 0;
+    tab = ft_copy_stack(push->stack_a);
+    ft_sort_tab(&tab[j], push->stack_a->len);
+    index_pivot = ft_find_index_pivot(push->stack_a);
+    value_pivot = ft_get_index_by_value(push->stack_a, tab[index_pivot - 1]);
+    ft_push_nbr_under_pivot_to_b(push, value_pivot);
+    while (push->stack_b->len > 5)
+    {
+        if (tab)
+            free(tab);
+        tab = ft_copy_stack(push->stack_b);
+        ft_sort_tab(&tab[j], push->stack_b->len);
+        index_pivot = ft_find_index_pivot(push->stack_b);
+        value_pivot = ft_get_index_by_value(push->stack_b, tab[index_pivot - 1]);
+        ft_push_nbr_above_pivot_to_a(push, value_pivot);
+    }
+    ft_sort_3_b(push);
+    free(tab);
 }

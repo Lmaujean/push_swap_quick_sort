@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bledda <bledda@student.42nice.fr>          +#+  +:+       +#+         #
+#    By: lmaujean <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/29 14:05:04 by lmaujean          #+#    #+#              #
-#    Updated: 2021/11/23 10:54:07 by bledda           ###   ########.fr        #
+#    Updated: 2021/11/08 15:01:10 by lmaujean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = push_swap
 
 CC= gcc
 
-CFLAGS= -Wall -Wextra -Werror  #-fsanitize=address
+CFLAGS= -Wall -Wextra -Werror  -fsanitize=address
 
 RM= rm -f
 

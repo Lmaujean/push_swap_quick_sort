@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   stack_init_clear.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bledda <bledda@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lmaujean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:42:36 by lmaujean          #+#    #+#             */
-/*   Updated: 2021/11/23 09:26:53 by bledda           ###   ########.fr       */
+/*   Updated: 2021/11/04 12:42:38 by lmaujean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/push_swap.h"
 
 t_push	*ft_init_stack(t_push *push)
